@@ -15,7 +15,7 @@ const App = () => {
   const [allWaves, setAllWaves] = useState([]);
   console.log("currentAccount: ", currentAccount);
   /* デプロイされたコントラクトのアドレスを保持する変数を作成 */
-  const contractAddress = "0x40d18E9E3A789Cf57481bC5169c457e06036dE6e";
+  const contractAddress = "0xd1377B637470febE623B7474694e640F7E6F9122";
   /* コントラクトからすべてのwavesを取得するメソッドを作成 */
   /* ABIの内容を参照する変数を作成 */
   const contractABI = abi.abi;
@@ -40,6 +40,7 @@ const App = () => {
             address: wave.waver,
             timestamp: new Date(wave.timestamp * 1000),
             message: wave.message,
+            result: wave.result
           };
         });
         /* React Stateにデータを格納する */
@@ -58,14 +59,15 @@ const App = () => {
   useEffect(() => {
     let wavePortalContract;
 
-    const onNewWave = (from, timestamp, message) => {
-      console.log("NewWave", from, timestamp, message);
+    const onNewWave = (from, timestamp, message, result) => {
+      console.log("NewWave", from, timestamp, message, result);
       setAllWaves((prevState) => [
         ...prevState,
         {
           address: from,
           timestamp: new Date(timestamp * 1000),
           message: message,
+          result: result
         },
       ]);
     };
@@ -248,6 +250,7 @@ const App = () => {
                   <div>Address: {wave.address}</div>
                   <div>Time: {wave.timestamp.toString()}</div>
                   <div>Message: {wave.message}</div>
+                  <div>Result: {wave.result.toString()}</div>
                 </div>
               );
             })}
